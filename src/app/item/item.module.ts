@@ -4,22 +4,23 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 
-import { ListPage } from './list.page';
-import { CategoryModalPageModule } from './category-modal/category-modal.module';
+import { ItemPage } from './item.page';
+
+import { TagInputModule } from 'ngx-chips';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    CategoryModalPageModule,
+    TagInputModule,
     RouterModule.forChild([
       {
         path: '',
-        component: ListPage
+        component: ItemPage
       }
     ])
   ],
-  declarations: [ListPage]
+  declarations: [ItemPage]
 })
-export class ListPageModule {}
+export class ItemPageModule {}

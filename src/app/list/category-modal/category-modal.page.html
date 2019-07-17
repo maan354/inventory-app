@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar text-center>
+    <ion-title>{{title}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-item>
+      <ion-label position="floating">Name</ion-label>
+      <ion-input name="name" [(ngModel)]="category.name" type="text"></ion-input>
+    </ion-item>
+
+    <!-- <ion-item>
+      <ion-label position="floating">Icon</ion-label>
+      <ion-input name="icon" [(ngModel)]="category.icon"></ion-input>
+    </ion-item> -->
+
+    <ion-item>
+      <ion-label position="floating">Description</ion-label>
+      <ion-textarea name="description" [(ngModel)]="category.description" type="text"></ion-textarea>
+    </ion-item>
+
+    <div class="ion-padding">
+      <ion-button expand="block" (click)="closeModal()" class="ion-no-margin">Create Category</ion-button>
+    </div>
+</ion-content>
+
+<!-- <img src="https://picsum.photos/400/300/?blur=2" alt="" /> -->

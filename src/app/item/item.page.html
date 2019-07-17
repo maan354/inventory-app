@@ -1,0 +1,66 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      {{item.name}}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="banner">
+    <ion-icon name="camera" style="font-size:64px;color: white;"></ion-icon>
+  </div>
+
+  <ion-segment (ionChange)="segmentChanged($event)">
+      <ion-segment-button value="info" checked>
+        <ion-label>Info</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="documents" disabled>
+        <ion-label>Documents</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+  <!-- lines="full" class="ion-no-margin ion-no-padding" -->
+  <ion-list lines="full" class="ion-no-margin ion-no-padding">
+        
+    <ion-item>
+      <ion-label position="stacked">Name</ion-label>
+      <ion-input [(ngModel)]="item.name"></ion-input>
+    </ion-item>
+    
+    
+    <ion-item>
+      <ion-label position="stacked">Category</ion-label>
+      <tag-input [(ngModel)]="item.categories"></tag-input>
+      <!-- https://github.com/gbuomprisco/ngx-chips/blob/master/docs/custom-themes.md -->
+      
+    </ion-item>
+    
+    <ion-item>
+      <ion-label position="stacked" value="0">Price</ion-label>
+      <ion-input type="number" [(ngModel)]="item.price"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Barcode</ion-label>
+      <ion-input [(ngModel)]="item.barcode"></ion-input>
+    </ion-item>
+    
+    <ion-item>
+      <ion-label position="stacked">Serial Number</ion-label>
+      <ion-input [(ngModel)]="item.serialNumber"></ion-input>
+    </ion-item>
+    
+    <ion-item>
+      <ion-label position="floating">Description</ion-label>
+      <ion-textarea [(ngModel)]="item.description"></ion-textarea>
+    </ion-item>
+  </ion-list>
+    
+    <div class="ion-padding">
+      <ion-button expand="block" (click)="saveItem()" class="ion-no-margin">Save Item</ion-button>
+    </div>
+</ion-content>

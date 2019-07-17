@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+import { CategoryModalPage } from './category-modal/category-modal.page';
+import { OverlayEventDetail } from '@ionic/core';
+import { category } from '../models/models';
 
 @Component({
   selector: 'app-list',
@@ -6,6 +10,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['list.page.scss']
 })
 export class ListPage implements OnInit {
+  
   private selectedItem: any;
   private icons = [
     'flask',
@@ -19,13 +24,16 @@ export class ListPage implements OnInit {
     'bluetooth',
     'build'
   ];
-  public items: Array<{ title: string; note: string; icon: string }> = [];
-  constructor() {
-    for (let i = 1; i < 11; i++) {
+
+  public items: category[] = [];
+  constructor(public modalController: ModalController) {
+    for (let i = 0; i < 10; i++) {
       this.items.push({
-        title: 'Item ' + i,
-        note: 'This is item #' + i,
-        icon: this.icons[Math.floor(Math.random() * this.icons.length)]
+        id: i,
+        name: 'Item ' + i,
+        description: 'This is item #' + i,
+        icon: this.icons[Math.floor(Math.random() * this.icons.length)],
+        image:''
       });
     }
   }
@@ -36,4 +44,45 @@ export class ListPage implements OnInit {
   // navigate(item) {
   //   this.router.navigate(['/list', JSON.stringify(item)]);
   // }
+
+
+  async createCategory() {
+    const blankCategory:category = {
+      id: this.items.length,
+      name: '',
+      description: '',
+      icon: '',
+      image:''
+    }
+    this.openModal('Create new Category',blankCategory)
+  }
+
+  async editCategory(id:number) {
+    const category = this.items[id];
+    this.openModal(`Edit ${category.name}`,category)
+  }
+
+  async openModal(title:string, input:category) {
+    console.log('creating modal with cat:',input)
+    const modal = await this.modalController.create({
+      component: CategoryModalPage,
+      componentProps: {
+        category:input,
+        title: title
+      }
+    });
+ 
+    modal.onDidDismiss().then((dataReturned:OverlayEventDetail<category>) => {
+      console.log('closing',dataReturned)
+      const category = dataReturned.data;
+      if (category !== null) {
+        if(category.id >= this.items.length)
+          this.items.push(category);
+        // else
+        //   this.items[category.id] = category;
+      }
+    });
+ 
+    return await modal.present();
+  }
 }
