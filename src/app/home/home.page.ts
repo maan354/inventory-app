@@ -11,10 +11,13 @@ import { ItemService } from '../services/item-service';
 export class HomePage {
   public searchTerm: string = ''
   
-  public items = this._itemService.getItems();
-  public filteredItems = this.items;
-  
-  constructor(private router: Router, private _itemService:ItemService) { }
+  public filteredItems;
+  public items;
+
+  constructor(private router: Router, private _itemService:ItemService) {
+    this.items = this._itemService.getItems();
+    this.filteredItems = this.items;
+  }
   
   filterItems(searchTerm) {
       return this.items.filter(item => {
@@ -34,6 +37,19 @@ export class HomePage {
         item: item
       }
     };
+    this.router.navigate(['/item'], navigationExtras);
+  }
+
+  createNewItem() {
+    let blankItem:item = {
+      id:this.items.length,name:'', image:'',description:"",price:0,categories:[],barcode:"",serialNumber:"",documents:[]
+    };
+    let navigationExtras: NavigationExtras = {
+      state: {
+        item: blankItem
+      }
+    };
+    console.log('send',blankItem)
     this.router.navigate(['/item'], navigationExtras);
   }
 

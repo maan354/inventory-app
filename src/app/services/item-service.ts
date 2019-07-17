@@ -22,7 +22,11 @@ export class ItemService {
         return this.items;
     }
 
-    public saveItem(id:number) {
-        
+    public saveItem(item:item) {
+        if(item.id === this.items.length){
+            this.items.push(item);
+        } else {
+            this.items[item.id] = item;
+        }
     }
 }

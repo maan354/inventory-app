@@ -10,8 +10,10 @@
 </ion-header>
 
 <ion-content>
-  <div class="banner">
-    <ion-icon name="camera" style="font-size:64px;color: white;"></ion-icon>
+
+  <div class="banner" >  
+    <ion-icon *ngIf="!item.image" name="camera" style="font-size:64px;color: white;"></ion-icon>
+    <!-- https://devdactic.com/ionic-4-image-upload-storage/ -->
   </div>
 
   <ion-segment (ionChange)="segmentChanged($event)">
