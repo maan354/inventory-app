@@ -20,7 +20,6 @@ export class HomePage {
   }
   
   stringContainsTerm(inputString:string,term:string){
-    console.log(inputString);
     return inputString.toLowerCase().indexOf(term.toLowerCase()) > -1;
   }
 
@@ -29,13 +28,11 @@ export class HomePage {
       return this.items;
 
     let searchTerms = searchTerm.split(' ');
-    console.log(searchTerms);
       return this.items.filter((item:item) => {
         return searchTerms.every((term:string) => {
           return this.stringContainsTerm(item.name,term) || 
                 (item.categories.find(s => this.stringContainsTerm(s,term)) != undefined);
         });
-        
       });
   }
   //https://www.joshmorony.com/high-performance-list-filtering-in-ionic-2/

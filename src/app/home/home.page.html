@@ -14,8 +14,10 @@
   <div class="banner">
     <ion-text color="light">
       <h1>You have {{items.length}} Items</h1>
+      <h2>{{filteredItems.length}} Items Selected</h2>
     </ion-text>
   </div>
+
   <ion-searchbar [(ngModel)]="searchTerm" (ionChange)="setFilteredItems()"></ion-searchbar>
 
   <ion-grid no-padding>

@@ -11,7 +11,8 @@
 
 <ion-content>
 
-  <div class="banner" >  
+  <div class="banner" [ngStyle]="{'background-image': displayImage()}">  
+    <ion-icon *ngIf="item.image" name="camera" style="font-size:64px;opacity: 0;"></ion-icon>
     <ion-icon *ngIf="!item.image" name="camera" style="font-size:64px;color: white;"></ion-icon>
     <!-- https://devdactic.com/ionic-4-image-upload-storage/ -->
   </div>
@@ -62,7 +63,8 @@
     </ion-item>
   </ion-list>
     
-    <div class="ion-padding">
-      <ion-button expand="block" (click)="saveItem()" class="ion-no-margin">Save Item</ion-button>
-    </div>
+    <!-- <div class="ion-padding"> -->
+      <ion-button *ngIf="isValidName()" expand="full" disabled class="ion-no-margin">Save Item</ion-button>
+      <ion-button *ngIf="!isValidName()" expand="full" (click)="saveItem()" class="ion-no-margin">Save Item</ion-button>
+    <!-- </div> -->
 </ion-content>

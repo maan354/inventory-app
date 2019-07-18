@@ -15,6 +15,22 @@ export class ItemPage implements OnInit {
   ngOnInit() {
   }
 
+  displayImage() {
+    const baseCss = "linear-gradient( rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5) )"    
+    if(this.item.image) 
+      return `url("${this.item.image}")`;
+    return baseCss;
+  }
+
+  isEmptyOrSpaces(str){
+    return str === null || str.match(/^ *$/) !== null;
+  }
+
+  isValidName() {
+    return this.isEmptyOrSpaces(this.item.name)
+    //and is unique
+    
+  }
   public data:any;
   constructor(private route: ActivatedRoute, private router: Router, private formBuilder: FormBuilder, private _itemService:ItemService) {
     this.item = this.router.getCurrentNavigation().extras.state.item;
