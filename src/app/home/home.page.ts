@@ -19,16 +19,30 @@ export class HomePage {
     this.filteredItems = this.items;
   }
   
-  filterItems(searchTerm) {
-      return this.items.filter(item => {
-        return item.name.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1;
+  stringContainsTerm(inputString:string,term:string){
+    console.log(inputString);
+    return inputString.toLowerCase().indexOf(term.toLowerCase()) > -1;
+  }
+
+  filterItems(searchTerm:string) {
+    if(!searchTerm)
+      return this.items;
+
+    let searchTerms = searchTerm.split(' ');
+    console.log(searchTerms);
+      return this.items.filter((item:item) => {
+        return searchTerms.every((term:string) => {
+          return this.stringContainsTerm(item.name,term) || 
+                (item.categories.find(s => this.stringContainsTerm(s,term)) != undefined);
+        });
+        
       });
   }
   //https://www.joshmorony.com/high-performance-list-filtering-in-ionic-2/
   setFilteredItems() {
     this.filteredItems = this.filterItems(this.searchTerm);
+    console.log(this.filteredItems)
   }
-
 
   openDetailsWithState(item:item) {
     console.log('send',item)
