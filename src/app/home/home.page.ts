@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
 import { item } from '../models/models';
 import { ItemService } from '../services/item-service';
+import { WebView } from '@ionic-native/ionic-webview/ngx';
 
 @Component({
   selector: 'app-home',
@@ -9,14 +10,17 @@ import { ItemService } from '../services/item-service';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+  [x: string]: any;
   public searchTerm: string = ''
   
-  public filteredItems;
-  public items;
+  public filteredItems = [];
+  public items = [];
 
-  constructor(private router: Router, private _itemService:ItemService) {
-    this.items = this._itemService.getItems();
-    this.filteredItems = this.items;
+  constructor(private router: Router, private _itemService:ItemService, private webview: WebView,) {
+    this._itemService.getItems().then(items => {
+      this.items = items;
+      this.filteredItems = items;
+    });
   }
   
   stringContainsTerm(inputString:string,term:string){
@@ -53,7 +57,7 @@ export class HomePage {
 
   createNewItem() {
     let blankItem:item = {
-      id:this.items.length,name:'', image:'',description:"",price:0,categories:[],barcode:"",serialNumber:"",documents:[]
+      id:this.items.length,name:'', image:'',filePath:'',description:"",price:0,categories:[],barcode:"",serialNumber:"",documents:[]
     };
     let navigationExtras: NavigationExtras = {
       state: {
@@ -64,4 +68,13 @@ export class HomePage {
     this.router.navigate(['/item'], navigationExtras);
   }
 
+  //move to helper class
+  pathForImage(img) {
+    if (img === null) {
+      return '';
+    } else {
+      let converted = this.webview.convertFileSrc(img);
+      return converted;
+    }
+  }
 }

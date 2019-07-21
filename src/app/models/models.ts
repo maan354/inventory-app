@@ -6,6 +6,7 @@ export interface item {
     barcode:string;
     serialNumber:string;
     image:string;
+    filePath:string;
     categories:string[];
     documents:string[];
 }

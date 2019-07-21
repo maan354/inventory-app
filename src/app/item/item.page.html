@@ -6,14 +6,20 @@
     <ion-title>
       {{item.name}}
     </ion-title>
+    <ion-buttons slot="primary">
+        <ion-button (click)="deleteItem()">
+          <ion-icon slot="icon-only" name="trash"></ion-icon>
+        </ion-button>
+      </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
   <div class="banner" [ngStyle]="{'background-image': displayImage()}">  
-    <ion-icon *ngIf="item.image" name="camera" style="font-size:64px;opacity: 0;"></ion-icon>
-    <ion-icon *ngIf="!item.image" name="camera" style="font-size:64px;color: white;"></ion-icon>
+    <!-- <ion-icon *ngIf="item.image" name="camera" style="font-size:64px;color: white;opacity: 0.5;"(click)="addImage()"></ion-icon> -->
+    <!-- <ion-icon *ngIf="!item.image" name="camera" style="font-size:64px;color: white;" (click)="addImage()"></ion-icon> -->
+    <ion-icon name="camera" style="font-size:64px;color: white;opacity: 0.5;"(click)="addImage()"></ion-icon>
     <!-- https://devdactic.com/ionic-4-image-upload-storage/ -->
   </div>
 
