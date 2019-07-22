@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{title}}</ion-title>
+    <ion-buttons slot="primary">
+        <ion-button (click)="deleteDocument()">
+          <ion-icon slot="icon-only" name="trash"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+  </ion-toolbar>
+  
+</ion-header>
+
+<ion-content padding>
+  <div class="banner" [ngStyle]="{'background-image': displayImage()}" >
+    <ion-icon name="camera" style="font-size:64px;color: white;opacity: 0.5;" (click)="addImage()"></ion-icon>
+  </div>
+
+  <ion-item>
+    <ion-label position="stacked">Name</ion-label>
+    <ion-input name="name" [(ngModel)]="document.name" type="text"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Description</ion-label>
+    <ion-textarea name="description" [(ngModel)]="document.description" type="text"></ion-textarea>
+  </ion-item>
+
+  <!-- Check that form is valid -->
+  <div class="ion-padding">
+    <ion-button expand="block" class="ion-no-margin" *ngIf="!isValidName()" disabled>Save</ion-button>
+    <ion-button expand="block" (click)="closeModal(document)" class="ion-no-margin" *ngIf="isValidName()">Save</ion-button>
+  </div>
+</ion-content>
+
+<!-- <img src="https://picsum.photos/400/300/?blur=2" alt="" /> -->

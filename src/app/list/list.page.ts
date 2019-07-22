@@ -3,6 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { CategoryModalPage } from './category-modal/category-modal.page';
 import { OverlayEventDetail } from '@ionic/core';
 import { category } from '../models/models';
+import { Guid } from 'guid-typescript';
 
 @Component({
   selector: 'app-list',
@@ -29,7 +30,7 @@ export class ListPage implements OnInit {
   constructor(public modalController: ModalController) {
     for (let i = 0; i < 10; i++) {
       this.items.push({
-        id: i,
+        id: Guid.create(),
         name: 'Item ' + i,
         description: 'This is item #' + i,
         icon: this.icons[Math.floor(Math.random() * this.icons.length)],
@@ -48,7 +49,7 @@ export class ListPage implements OnInit {
 
   async createCategory() {
     const blankCategory:category = {
-      id: this.items.length,
+      id: Guid.create(),
       name: '',
       description: '',
       icon: '',
@@ -75,12 +76,12 @@ export class ListPage implements OnInit {
     modal.onDidDismiss().then((dataReturned:OverlayEventDetail<category>) => {
       console.log('closing',dataReturned)
       const category = dataReturned.data;
-      if (category !== null) {
-        if(category.id >= this.items.length)
-          this.items.push(category);
-        // else
-        //   this.items[category.id] = category;
-      }
+      // if (category !== null) {
+      //   if(category.id >= this.items.length)
+      //     this.items.push(category);
+      //   // else
+      //   //   this.items[category.id] = category;
+      // }
     });
  
     return await modal.present();

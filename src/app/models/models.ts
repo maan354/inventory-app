@@ -1,5 +1,7 @@
+import { Guid } from 'guid-typescript';
+
 export interface item {
-    id:number;
+    id:Guid;
     name:string;
     description:string;
     price:number;
@@ -8,11 +10,20 @@ export interface item {
     image:string;
     filePath:string;
     categories:string[];
-    documents:string[];
+    documents:document[];
+}
+
+export interface document {
+    id:Guid;
+    itemId:Guid,
+    image:string;
+    filePath:string;
+    name:string;
+    description:string;
 }
 
 export interface category { 
-    id:number; 
+    id:Guid; 
     name: string; 
     description: string; 
     icon: string;
@@ -20,6 +31,6 @@ export interface category {
 };
 
 export interface tag {
-        display: string,
-        value: string
+    display: string,
+    value: string
 }

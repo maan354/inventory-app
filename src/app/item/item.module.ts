@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { ItemPage } from './item.page';
 
 import { TagInputModule } from 'ngx-chips';
+import { DocumentModalPageModule } from '../document-modal/document-modal.module'
 
 @NgModule({
   imports: [
@@ -14,6 +15,7 @@ import { TagInputModule } from 'ngx-chips';
     FormsModule,
     IonicModule,
     TagInputModule,
+    DocumentModalPageModule,
     RouterModule.forChild([
       {
         path: '',

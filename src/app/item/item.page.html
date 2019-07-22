@@ -7,47 +7,48 @@
       {{item.name}}
     </ion-title>
     <ion-buttons slot="primary">
-        <ion-button (click)="deleteItem()">
-          <ion-icon slot="icon-only" name="trash"></ion-icon>
-        </ion-button>
-      </ion-buttons>
+      <ion-button (click)="deleteItem()">
+        <ion-icon slot="icon-only" name="trash"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
-  <div class="banner" [ngStyle]="{'background-image': displayImage()}">  
+  <div class="banner" [ngStyle]="{'background-image': displayImage()}">
     <!-- <ion-icon *ngIf="item.image" name="camera" style="font-size:64px;color: white;opacity: 0.5;"(click)="addImage()"></ion-icon> -->
     <!-- <ion-icon *ngIf="!item.image" name="camera" style="font-size:64px;color: white;" (click)="addImage()"></ion-icon> -->
-    <ion-icon name="camera" style="font-size:64px;color: white;opacity: 0.5;"(click)="addImage()"></ion-icon>
+    <ion-icon name="camera" style="font-size:64px;color: white;opacity: 0.5;" (click)="addImage()"></ion-icon>
     <!-- https://devdactic.com/ionic-4-image-upload-storage/ -->
   </div>
 
   <ion-segment (ionChange)="segmentChanged($event)">
-      <ion-segment-button value="info" checked>
-        <ion-label>Info</ion-label>
-      </ion-segment-button>
-      <ion-segment-button value="documents" disabled>
-        <ion-label>Documents</ion-label>
-      </ion-segment-button>
-    </ion-segment>
+    <ion-segment-button value="info" checked (click)="selectedTab = ('info')">
+      <ion-label>Info</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="documents" (click)="selectedTab = ('document')">
+      <ion-label>Documents</ion-label>
+    </ion-segment-button>
+  </ion-segment>
 
   <!-- lines="full" class="ion-no-margin ion-no-padding" -->
-  <ion-list lines="full" class="ion-no-margin ion-no-padding">
-        
+
+  <ion-list *ngIf="selectedTab === 'info'" lines="full" class="ion-no-margin ion-no-padding">
+
     <ion-item>
       <ion-label position="stacked">Name</ion-label>
       <ion-input [(ngModel)]="item.name"></ion-input>
     </ion-item>
-    
-    
+
+
     <ion-item>
       <ion-label position="stacked">Category</ion-label>
-      <tag-input [(ngModel)]="item.categories" modelAsStrings="true" ></tag-input>
+      <tag-input [(ngModel)]="item.categories" modelAsStrings="true"></tag-input>
       <!-- https://github.com/gbuomprisco/ngx-chips/blob/master/docs/custom-themes.md -->
-      
+
     </ion-item>
-    
+
     <ion-item>
       <ion-label position="stacked" value="0">Price</ion-label>
       <ion-input type="number" [(ngModel)]="item.price"></ion-input>
@@ -57,20 +58,52 @@
       <ion-label position="stacked">Barcode</ion-label>
       <ion-input [(ngModel)]="item.barcode"></ion-input>
     </ion-item>
-    
+
     <ion-item>
       <ion-label position="stacked">Serial Number</ion-label>
       <ion-input [(ngModel)]="item.serialNumber"></ion-input>
     </ion-item>
-    
+
     <ion-item>
-      <ion-label position="floating">Description</ion-label>
+      <ion-label position="stacked">Description</ion-label>
       <ion-textarea [(ngModel)]="item.description"></ion-textarea>
     </ion-item>
-  </ion-list>
-    
+
     <!-- <div class="ion-padding"> -->
-      <ion-button *ngIf="isValidName()" expand="full" disabled class="ion-no-margin">Save Item</ion-button>
-      <ion-button *ngIf="!isValidName()" expand="full" (click)="saveItem()" class="ion-no-margin">Save Item</ion-button>
-    <!-- </div> -->
+    <ion-button *ngIf="!isValidName()" expand="full" disabled class="ion-no-margin">Save Item</ion-button>
+    <ion-button *ngIf="isValidName()" expand="full" (click)="saveItem()" class="ion-no-margin">Save Item</ion-button>
+  <!-- </div> -->
+  </ion-list>
+
+  <div *ngIf="selectedTab === 'document'">
+      <ion-grid no-padding *ngIf="item.documents.length > 0">
+          <ion-row class="pins">
+            <ion-col *ngFor="let document of item.documents" size="12" size-sm="12" size-md="12" size-lg="12" no-padding>
+              <ion-card class="welcome-card pin" (click)="editDocument(document)">
+                <ion-img *ngIf="document.filePath" [src]="pathForImage(document.filePath)"></ion-img>
+                <div *ngIf="!document.filePath" style="background-color:darkslategray;text-align: center;padding-top: 25%;padding-bottom: 25%">
+                    <ion-icon name="camera" style="font-size:64px;color: black;opacity: 0.5;"></ion-icon>
+                </div>
+                <ion-card-header>
+                    <ion-card-subtitle style="text-align: center">
+                      {{document.name}}
+                      <!-- <ion-icon name="trash"></ion-icon> -->
+                  </ion-card-subtitle>
+                </ion-card-header>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+        <h4 *ngIf="item.documents.length === 0" style="padding-top:30%;padding-bottom:30%;text-align: center">
+          Add documents related to this item
+        </h4>
+  </div>
+  
 </ion-content>
+
+<ion-fab *ngIf="selectedTab === 'document'" vertical="bottom" horizontal="end" slot="fixed" (click)="addDocument()">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>

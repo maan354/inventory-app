@@ -3,6 +3,8 @@ import { Router, NavigationExtras } from '@angular/router';
 import { item } from '../models/models';
 import { ItemService } from '../services/item-service';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
+import { Guid } from "guid-typescript";
+import { ImageHelper } from '../helpers/image-helper';
 
 @Component({
   selector: 'app-home',
@@ -16,10 +18,13 @@ export class HomePage {
   public filteredItems = [];
   public items = [];
 
-  constructor(private router: Router, private _itemService:ItemService, private webview: WebView,) {
+  constructor(private router: Router, 
+    private _itemService:ItemService,
+    private imageHelper:ImageHelper) {
     this._itemService.getItems().then(items => {
       this.items = items;
       this.filteredItems = items;
+      console.log(this.filteredItems)
     });
   }
   
@@ -57,7 +62,7 @@ export class HomePage {
 
   createNewItem() {
     let blankItem:item = {
-      id:this.items.length,name:'', image:'',filePath:'',description:"",price:0,categories:[],barcode:"",serialNumber:"",documents:[]
+      id:Guid.create(),name:'', image:'',filePath:'',description:"",price:0,categories:[],barcode:"",serialNumber:"",documents:[]
     };
     let navigationExtras: NavigationExtras = {
       state: {
@@ -68,13 +73,8 @@ export class HomePage {
     this.router.navigate(['/item'], navigationExtras);
   }
 
-  //move to helper class
   pathForImage(img) {
-    if (img === null) {
-      return '';
-    } else {
-      let converted = this.webview.convertFileSrc(img);
-      return converted;
-    }
+    console.log('pathForFile',img)
+    return this.imageHelper.pathForImage(img)
   }
 }

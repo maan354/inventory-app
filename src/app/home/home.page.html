@@ -27,11 +27,11 @@
           
           <ion-img *ngIf="item.filePath" [src]="pathForImage(item.filePath)"></ion-img>
           <div *ngIf="!item.filePath" style="background-color:darkslategray;text-align: center;padding-top: 25%;padding-bottom: 25%">
-              <ion-icon name="camera" style="font-size:64px;color: black;opacity: 0.5;"(click)="addImage()"></ion-icon>
+              <ion-icon name="camera" style="font-size:64px;color: black;opacity: 0.5;"></ion-icon>
           </div>
           
           <ion-card-header>
-            <ion-card-subtitle>{{item.name}}</ion-card-subtitle>
+            <ion-card-subtitle style="text-align: center">{{item.name}}</ion-card-subtitle>
           </ion-card-header>
         </ion-card>
       </ion-col>
