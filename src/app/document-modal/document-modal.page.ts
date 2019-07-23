@@ -19,9 +19,12 @@ export class DocumentModalPage implements OnInit {
     private modalController: ModalController,
     private camera: Camera,
     private imageHelper:ImageHelper,
-    private itemService:ItemService,
-    private actionSheetController: ActionSheetController
+    private itemService:ItemService
   ) { }
+
+  //Add document scanner rather than normal camera: https://ionicframework.com/docs/native/document-scanner
+  //Add document viewer
+  
 
   ngOnInit() {
     console.log('opening : ',this.document)

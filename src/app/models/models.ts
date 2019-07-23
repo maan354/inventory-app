@@ -9,6 +9,7 @@ export interface item {
     serialNumber:string;
     image:string;
     filePath:string;
+    thumbPath:string;
     categories:string[];
     documents:document[];
 }

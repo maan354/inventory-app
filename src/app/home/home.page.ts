@@ -62,7 +62,7 @@ export class HomePage {
 
   createNewItem() {
     let blankItem:item = {
-      id:Guid.create(),name:'', image:'',filePath:'',description:"",price:0,categories:[],barcode:"",serialNumber:"",documents:[]
+      id:Guid.create(),name:'', image:'',filePath:'',thumbPath:'',description:"",price:0,categories:[],barcode:"",serialNumber:"",documents:[]
     };
     let navigationExtras: NavigationExtras = {
       state: {

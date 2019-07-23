@@ -28,7 +28,7 @@ export class ImageHelper {
     }
 
     public pathForImage(img:string) {
-        //return img; //MOCK
+        // return img; //MOCK
         if (img === null) {
             return '';
         } else {
@@ -64,8 +64,8 @@ export class ImageHelper {
 
     public takePicture(sourceType: PictureSourceType, assignFunction:(path:string) => void,crop:boolean=true) {
         //MOCK
-        //assignFunction('https://picsum.photos/200?random=1');
-        //return;
+        // assignFunction('https://picsum.photos/200?random=1');
+        // return;
         
         var options: CameraOptions = {
             quality: 100,
@@ -73,6 +73,7 @@ export class ImageHelper {
             mediaType: this.camera.MediaType.PICTURE,
             saveToPhotoAlbum: false,
             correctOrientation: true,
+            //destinationType: this.camera.DestinationType.FILE_URI
             // targetHeight: 600,
             // targetWidth: 600,
             //encodingType: this.camera.EncodingType.JPEG
@@ -120,4 +121,50 @@ export class ImageHelper {
             
         });
     }
+
+    // https://ionicacademy.com/create-thumbnail-image-ionic/
+    // generateThumbnail() {
+    //     this.generateFromImage(this.bigImg, 200, 200, 0.5, data => {
+    //         this.smallImg = data;
+    //         this.smallSize = this.getImageSize(this.smallImg);
+    //       });
+    // }
+
+    // generateFromImage(img, MAX_WIDTH: number = 700, MAX_HEIGHT: number = 700, quality: number = 1, callback) {
+    //     var canvas: any = document.createElement("canvas");
+    //     var image = new Image();
+     
+    //     image.onload = () => {
+    //       var width = image.width;
+    //       var height = image.height;
+     
+    //       if (width > height) {
+    //         if (width > MAX_WIDTH) {
+    //           height *= MAX_WIDTH / width;
+    //           width = MAX_WIDTH;
+    //         }
+    //       } else {
+    //         if (height > MAX_HEIGHT) {
+    //           width *= MAX_HEIGHT / height;
+    //           height = MAX_HEIGHT;
+    //         }
+    //       }
+    //       canvas.width = width;
+    //       canvas.height = height;
+    //       var ctx = canvas.getContext("2d");
+     
+    //       ctx.drawImage(image, 0, 0, width, height);
+     
+    //       // IMPORTANT: 'jpeg' NOT 'jpg'
+    //       var dataUrl = canvas.toDataURL('image/jpeg', quality);
+     
+    //       callback(dataUrl)
+    //     }
+    //     image.src = img;
+    //   }
+
+    // getImageSize(data_url) {
+    //     var head = 'data:image/jpeg;base64,';
+    //     return ((data_url.length - head.length) * 3 / 4 / (1024*1024)).toFixed(4);
+    //   }
 }
