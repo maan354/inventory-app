@@ -18,22 +18,22 @@ export class DocumentModalPage implements OnInit {
   constructor(
     private modalController: ModalController,
     private camera: Camera,
-    private imageHelper:ImageHelper,
-    private itemService:ItemService
+    private imageHelper: ImageHelper,
+    private itemService: ItemService
   ) { }
 
   //Add document scanner rather than normal camera: https://ionicframework.com/docs/native/document-scanner
   //Add document viewer
-  
+
 
   ngOnInit() {
-    console.log('opening : ',this.document)
+    console.log('opening : ', this.document)
   }
 
   displayImage() {
     const baseCss = "linear-gradient( rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5) )"
-    if (this.document.filePath){
-      
+    if (this.document.filePath) {
+
       return `url("${this.imageHelper.pathForImage(this.document.filePath)}")`;
     }
     return baseCss;
@@ -41,7 +41,7 @@ export class DocumentModalPage implements OnInit {
 
   public async addImage() {
     // this.imageHelper.getImage((path) => {this.document.filePath = path; });
-    this.imageHelper.takePicture(this.camera.PictureSourceType.CAMERA,(path) => {this.document.filePath = path; },false); 
+    this.imageHelper.getImage((path) => { this.document.filePath = path; }, false);
   }
 
   isEmptyOrSpaces(str) {
@@ -53,12 +53,12 @@ export class DocumentModalPage implements OnInit {
     //and is unique
   }
 
-  async closeModal(document:document) {
-    console.log('closing category:',document)
+  async closeModal(document: document) {
+    console.log('closing category:', document)
     await this.modalController.dismiss(document);
   }
 
-  deleteDocument(){
+  deleteDocument() {
     this.itemService.deleteItemDocument(this.document);
     this.closeModal(null);
   }

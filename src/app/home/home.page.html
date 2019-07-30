@@ -21,15 +21,18 @@
   <ion-searchbar [(ngModel)]="searchTerm" (ionChange)="setFilteredItems()"></ion-searchbar>
 
   <ion-grid no-padding>
-    <ion-row class="pins">
+    <ion-row>
       <ion-col *ngFor="let item of filteredItems" size="6" size-sm="6" size-md="4" size-lg="3" no-padding>
-        <ion-card class="welcome-card pin" (click)="openDetailsWithState(item)">
-          
-          <ion-img *ngIf="item.filePath" [src]="pathForImage(item.filePath)"></ion-img>
-          <div *ngIf="!item.filePath" style="background-color:darkslategray;text-align: center;padding-top: 25%;padding-bottom: 25%">
-              <ion-icon name="camera" style="font-size:64px;color: black;opacity: 0.5;"></ion-icon>
+        <ion-card class="welcome-card" (click)="openDetailsWithState(item)">
+
+          <!-- <ion-img *ngIf="item.filePath" [src]="pathForImage(item.filePath)" [alt]="pathForImage(item.filePath)"
+            style=" height:100%;"></ion-img>
+          [ngStyle]="{'content': displayImage(item)}" -->
+          <img *ngIf="item.filePath" src="{{pathForImage(item.filePath)}}" alt="{{pathForImage(item.filePath)}}">
+          <div *ngIf="!item.filePath"
+            style="background-color:darkslategray;text-align: center;padding-top: 30%;padding-bottom: 30%; height:100%;">
+            <ion-icon name="camera" style="font-size:64px;color: black;opacity: 0.5;"></ion-icon>
           </div>
-          
           <ion-card-header>
             <ion-card-subtitle style="text-align: center">{{item.name}}</ion-card-subtitle>
           </ion-card-header>
@@ -37,6 +40,28 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+
+  <!-- <div class="pins">
+
+    <div class="pin" *ngFor="let item of filteredItems">
+
+      <ion-card (click)="openDetailsWithState(item)">
+
+        <ion-img *ngIf="item.filePath" [src]="pathForImage(item.filePath)"></ion-img>
+        <div *ngIf="!item.filePath"
+          style="background-color:darkslategray;text-align: center;padding-top: 25%;padding-bottom: 25%; min-width: 150px;">
+          <ion-icon name="camera" style="font-size:64px;color: black;opacity: 0.5;"></ion-icon>
+        </div>
+
+        <ion-card-header>
+          <ion-card-subtitle style="text-align: center">{{item.name}}</ion-card-subtitle>
+        </ion-card-header>
+      </ion-card>
+    </div>
+
+  </div> -->
+
+
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="createNewItem()">
     <ion-fab-button>
       <ion-icon name="add"></ion-icon>
