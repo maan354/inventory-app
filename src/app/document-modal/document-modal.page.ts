@@ -4,6 +4,7 @@ import { document } from 'src/app/models/models';
 import { ImageHelper } from '../helpers/image-helper';
 import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/camera/ngx';
 import { ItemService } from '../services/item-service';
+import { DeleteConfirmationPopover } from '../components/delete-confirmation-popover/delete-confirmation-popover';
 
 @Component({
   selector: 'modal-page',
@@ -19,7 +20,8 @@ export class DocumentModalPage implements OnInit {
     private modalController: ModalController,
     private camera: Camera,
     private imageHelper: ImageHelper,
-    private itemService: ItemService
+    private itemService: ItemService,
+    private deleteConfirmationPopover: DeleteConfirmationPopover
   ) { }
 
   //Add document scanner rather than normal camera: https://ionicframework.com/docs/native/document-scanner
@@ -58,9 +60,12 @@ export class DocumentModalPage implements OnInit {
     await this.modalController.dismiss(document);
   }
 
-  deleteDocument() {
-    this.itemService.deleteItemDocument(this.document);
-    this.closeModal(null);
+  async deleteDocument() {
+    const deleteAction = () => {
+      this.itemService.deleteItemDocument(this.document);
+      this.closeModal(null);
+    }
+    await this.deleteConfirmationPopover.showPopover('document', deleteAction);
   }
 
 }

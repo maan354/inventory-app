@@ -8,8 +8,6 @@ import { FilePath } from '@ionic-native/file-path/ngx';
 import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/camera/ngx';
 import { Crop } from '@ionic-native/crop/ngx';
 
-const STORAGE_KEY = 'my_items';
-
 @Injectable({
     providedIn: 'root',
 })
@@ -28,7 +26,7 @@ export class ImageHelper {
     }
 
     public pathForImage(img: string) {
-        //return img; //MOCK
+        return img; //MOCK
         if (img === null) {
             return '';
         } else {
@@ -36,20 +34,6 @@ export class ImageHelper {
             return converted;
         }
     }
-
-    // public pathForImage(url: string): string | SafeUrl {
-    //     if (this.platform.is('cordova')) {
-    //         const win: any = window;
-    //         const fixedURL = win.Ionic.WebView.convertFileSrc(url);
-
-    //         const securityContext:  SecurityContext = {
-
-    //         }
-    //         return this.sanitizer.sanitize(securityContext,fixedURL);//.bypassSecurityTrustUrl();
-    //     } else {
-    //         return url;
-    //     }
-    // }
 
     public async getImage(assignFunction: (path: string) => void, crop: boolean = true) {
         const actionSheet = await this.actionSheetController.create({

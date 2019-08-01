@@ -15,6 +15,7 @@ import { ImageHelper } from '../helpers/image-helper';
 import { DocumentModalPage } from '../document-modal/document-modal.page';
 import { OverlayEventDetail } from '@ionic/core';
 import { Guid } from 'guid-typescript';
+import { DeleteConfirmationPopover } from '../components/delete-confirmation-popover/delete-confirmation-popover';
 
 @Component({
   selector: 'app-item',
@@ -22,22 +23,27 @@ import { Guid } from 'guid-typescript';
   styleUrls: ['item.page.scss']
 })
 export class ItemPage implements OnInit {
-  [x: string]: any;
   public item: item;
   public selectedTab = 'info';
+  public categories = ['q', 'w', 'e'];
+
   ngOnInit() {
   }
 
   public data: any;
   constructor(
     private router: Router,
-    private camera: Camera,
     private itemService: ItemService,
-    private actionSheetController: ActionSheetController,
     private imageHelper: ImageHelper,
-    public modalController: ModalController
+    public modalController: ModalController,
+    private deleteConfirmationPopover: DeleteConfirmationPopover
   ) {
     this.item = this.router.getCurrentNavigation().extras.state.item;
+    this.itemService.getCategories()
+      .then(result => {
+        this.categories = result;
+        console.log('categories loaded:', this.categories);
+      });
   }
 
   pathForImage(img) {
@@ -62,18 +68,21 @@ export class ItemPage implements OnInit {
     //and is unique
   }
 
-  public segmentChanged($event) {
+  segmentChanged($event) {
     console.log($event.detail.value);
   }
 
-  public saveItem() {
+  saveItem() {
     this.itemService.saveItem(this.item);
     this.router.navigate(['/home']);
   }
 
-  public deleteItem() {
-    this.itemService.deleteItem(this.item);
-    this.router.navigate(['/home']);
+  async deleteItem() {
+    const deleteAction = () => {
+      this.itemService.deleteItem(this.item);
+      this.router.navigate(['/home']);
+    }
+    await this.deleteConfirmationPopover.showPopover('item', deleteAction);
   }
 
   public async addImage() {

@@ -1,9 +1,9 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+      <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>
+    <ion-title slot="middle">
       {{item.name}}
     </ion-title>
     <ion-buttons slot="primary">
@@ -44,7 +44,11 @@
 
     <ion-item>
       <ion-label position="stacked">Category</ion-label>
-      <tag-input [(ngModel)]="item.categories" modelAsStrings="true"></tag-input>
+      <tag-input [(ngModel)]="item.categories" modelAsStrings="true" addOnBlur="true">
+        <tag-input-dropdown [autocompleteItems]="categories" [showDropdownIfEmpty]="true">
+
+        </tag-input-dropdown>
+      </tag-input>
       <!-- https://github.com/gbuomprisco/ngx-chips/blob/master/docs/custom-themes.md -->
 
     </ion-item>
