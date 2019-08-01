@@ -74,7 +74,6 @@ export class HomePage {
   }
 
   pathForImage(img) {
-    console.log('pathForFile', img)
     return this.imageHelper.pathForImage(img)
   }
 

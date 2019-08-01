@@ -44,7 +44,10 @@
 
     <ion-item>
       <ion-label position="stacked">Category</ion-label>
-      <tag-input [(ngModel)]="item.categories" modelAsStrings="true" addOnBlur="true">
+      <tag-input [(ngModel)]="item.categories" modelAsStrings="true" theme="minimal" addOnBlur=" true"
+        style="width: 100%;">
+        <!--  -->
+        <!-- theme: dark minimal -->
         <tag-input-dropdown [autocompleteItems]="categories" [showDropdownIfEmpty]="true">
 
         </tag-input-dropdown>
