@@ -1,10 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, HostListener } from '@angular/core';
 import { ModalController, ActionSheetController } from '@ionic/angular';
 import { document } from 'src/app/models/models';
 import { ImageHelper } from '../helpers/image-helper';
 import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/camera/ngx';
 import { ItemService } from '../services/item-service';
 import { DeleteConfirmationPopover } from '../components/delete-confirmation-popover/delete-confirmation-popover';
+import { fromEvent, Subscription } from 'rxjs';
 
 @Component({
   selector: 'modal-page',
@@ -15,6 +16,7 @@ export class DocumentModalPage implements OnInit {
   [x: string]: any;
   @Input() document: document;
   @Input() title: string;
+  private backbuttonSubscription: Subscription;
 
   constructor(
     private modalController: ModalController,
@@ -24,12 +26,27 @@ export class DocumentModalPage implements OnInit {
     private deleteConfirmationPopover: DeleteConfirmationPopover
   ) { }
 
+  // @HostListener('document:ionBackButton', ['$event'])
+  // private async overrideHardwareBackAction($event: any) {
+  //   await this.closeModal(null);
+  // }
+
   //Add document scanner rather than normal camera: https://ionicframework.com/docs/native/document-scanner
   //Add document viewer
 
-
   ngOnInit() {
-    console.log('opening : ', this.document)
+    console.log('opening : ', this.document);
+    const event = fromEvent(document, 'backbutton');
+    this.backbuttonSubscription = event.subscribe(async () => {
+      const modal = await this.modalController.getTop();
+
+      if (modal) {
+        modal.dismiss(null);
+      }
+    });
+  }
+  ngOnDestroy() {
+    this.backbuttonSubscription.unsubscribe();
   }
 
   displayImage() {
@@ -41,7 +58,13 @@ export class DocumentModalPage implements OnInit {
     return baseCss;
   }
 
-  public async addImage() {
+  public showImage(event) {
+    event.stopPropagation();
+    this.imageHelper.showImage(this.document.filePath)
+  }
+
+  public async addImage(event) {
+    event.stopPropagation();
     // this.imageHelper.getImage((path) => {this.document.filePath = path; });
     this.imageHelper.getImage((path) => { this.document.filePath = path; }, false);
   }
@@ -56,7 +79,7 @@ export class DocumentModalPage implements OnInit {
   }
 
   async closeModal(document: document) {
-    console.log('closing category:', document)
+    console.log('closing document:', document)
     await this.modalController.dismiss(document);
   }
 

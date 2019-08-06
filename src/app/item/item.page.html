@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title slot="middle">
+    <ion-title>
       {{item.name}}
     </ion-title>
     <ion-buttons slot="primary">
@@ -16,11 +16,23 @@
 
 <ion-content>
 
-  <div class="banner" [ngStyle]="{'background-image': displayImage()}">
+  <div class="banner" *ngIf="!item.filePath" [ngStyle]="{'background-image': displayImage()}">
     <!-- <ion-icon *ngIf="item.image" name="camera" style="font-size:64px;color: white;opacity: 0.5;"(click)="addImage()"></ion-icon> -->
     <!-- <ion-icon *ngIf="!item.image" name="camera" style="font-size:64px;color: white;" (click)="addImage()"></ion-icon> -->
-    <ion-icon name="camera" style="font-size:64px;color: white;opacity: 0.5;" (click)="addImage()"></ion-icon>
+    <ion-icon *ngIf="!item.filePath" name="camera" style="font-size:64px;color: white;opacity: 0.5;"
+      (click)="addImage()"></ion-icon>
+    <!-- <ion-icon name="camera" style="font-size:64px;color: white;opacity: 0.5;" (click)="addImage()"></ion-icon> -->
     <!-- https://devdactic.com/ionic-4-image-upload-storage/ -->
+  </div>
+
+  <div class="banner" *ngIf="item.filePath" [ngStyle]="{'background-image': displayImage()}" style="height: 40%;"
+    (click)="showImage($event)">
+    <!-- This is a hacky way of doing it, but it works for now  -->
+    <ion-fab vertical="top" horizontal="end" slot="fixed">
+      <ion-fab-button (click)="addImage($event)">
+        <ion-icon name="camera" style="color: white"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
   </div>
 
   <ion-segment (ionChange)="segmentChanged($event)">
@@ -44,7 +56,7 @@
 
     <ion-item>
       <ion-label position="stacked">Category</ion-label>
-      <tag-input [(ngModel)]="item.categories" modelAsStrings="true" theme="minimal" addOnBlur=" true"
+      <tag-input [(ngModel)]="item.categories" modelAsStrings="true" [theme]="'minimal'" addOnBlur=" true"
         style="width: 100%;">
         <!--  -->
         <!-- theme: dark minimal -->

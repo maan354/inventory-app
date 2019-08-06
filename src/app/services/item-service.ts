@@ -17,7 +17,7 @@ export class ItemService {
         private storage: Storage, private webview: WebView, private file: File) {
     }
 
-    pathForImage(img) {
+    public pathForImage(img: string) {
         if (img === null) {
             return '';
         } else {
@@ -41,12 +41,12 @@ export class ItemService {
     }
 
     //Look at caching this data to save on loading
-    public async getCategories() {
+    public getCategories() {
         const distinct = (value, index, self) => {
             return self.indexOf(value) === index;
         }
 
-        const items = await this.getItems();
+        const items = this.items;
         const categories = items
             .reduceRight((a, i) => a.concat(i.categories), [])
             .filter(distinct);

@@ -39,11 +39,7 @@ export class ItemPage implements OnInit {
     private deleteConfirmationPopover: DeleteConfirmationPopover
   ) {
     this.item = this.router.getCurrentNavigation().extras.state.item;
-    this.itemService.getCategories()
-      .then(result => {
-        this.categories = result;
-        console.log('categories loaded:', this.categories);
-      });
+    this.categories = this.itemService.getCategories();
   }
 
   pathForImage(img) {
@@ -85,11 +81,18 @@ export class ItemPage implements OnInit {
     await this.deleteConfirmationPopover.showPopover('item', deleteAction);
   }
 
-  public async addImage() {
+  public async addImage(event) {
+    event.stopPropagation();
+
     await this.imageHelper.getImage((path) => { this.item.filePath = path; }, false);
     // await this.imageHelper.takePicture(this.camera.PictureSourceType.CAMERA,(path) => {this.item.filePath = path; },false);
     // await this.imageHelper.takePicture(this.camera.PictureSourceType.CAMERA,(path) => {this.item.description = path; },false);
     this.itemService.saveItem(this.item);
+  }
+
+  public showImage(event) {
+    event.stopPropagation();
+    this.imageHelper.showImage(this.item.filePath)
   }
 
   async addDocument() {

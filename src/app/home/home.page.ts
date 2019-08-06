@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
 import { item } from '../models/models';
 import { ItemService } from '../services/item-service';
@@ -11,20 +11,21 @@ import { ImageHelper } from '../helpers/image-helper';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
-  [x: string]: any;
+export class HomePage implements OnInit {
   public searchTerm: string = ''
 
   public filteredItems = [];
   public items = [];
 
   constructor(private router: Router,
-    private _itemService: ItemService,
-    private imageHelper: ImageHelper) {
-    this._itemService.getItems().then(items => {
+    private imageHelper: ImageHelper,
+    private itemService: ItemService
+  ) { }
+
+  ngOnInit() {
+    this.itemService.getItems().then(items => {
       this.items = items;
       this.filteredItems = items;
-      console.log(this.filteredItems)
     });
   }
 

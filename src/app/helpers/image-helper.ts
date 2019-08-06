@@ -7,6 +7,7 @@ import { Platform, ActionSheetController } from '@ionic/angular';
 import { FilePath } from '@ionic-native/file-path/ngx';
 import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/camera/ngx';
 import { Crop } from '@ionic-native/crop/ngx';
+import { PhotoViewer } from '@ionic-native/photo-viewer';
 
 @Injectable({
     providedIn: 'root',
@@ -26,13 +27,17 @@ export class ImageHelper {
     }
 
     public pathForImage(img: string) {
-        return img; //MOCK
+        return img; //MOCK TODO: Make this read config
         if (img === null) {
             return '';
         } else {
             const converted = this.webview.convertFileSrc(img);
             return converted;
         }
+    }
+
+    public showImage(image) {
+        PhotoViewer.show(image);
     }
 
     public async getImage(assignFunction: (path: string) => void, crop: boolean = true) {
@@ -61,10 +66,10 @@ export class ImageHelper {
     }
 
     public takePicture(sourceType: PictureSourceType, assignFunction: (path: string) => void, crop: boolean = true) {
-        //MOCK
-        // const rand = (Math.ceil(Math.random() * 10))
-        // assignFunction(`https://picsum.photos/200?random=${rand}`);
-        // return;
+        //MOCK TODO: Make this read config
+        const rand = (Math.ceil(Math.random() * 10))
+        assignFunction(`https://picsum.photos/200?random=${rand}`);
+        return;
 
         var options: CameraOptions = {
             quality: 100,

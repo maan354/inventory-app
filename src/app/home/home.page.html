@@ -13,21 +13,21 @@
 <ion-content>
   <div class="banner">
     <ion-text color="light">
-      <h1 *ngIf="!searchTerm">You have {{items.length}} Items</h1>
+      <h1 *ngIf="!searchTerm && items.length === 0">You have no items yet</h1>
+      <h1 *ngIf="!searchTerm && items.length === 1">You have 1 Item</h1>
+      <h1 *ngIf="!searchTerm && items.length != 1">You have {{items.length}} Items</h1>
       <h1 *ngIf="searchTerm">{{filteredItems.length}} Items Selected</h1>
     </ion-text>
   </div>
 
   <ion-searchbar [(ngModel)]="searchTerm" (ionChange)="setFilteredItems()"></ion-searchbar>
 
-  <ion-grid no-padding>
+  <!-- <ion-grid no-padding>
     <ion-row>
-      <ion-col *ngFor="let item of filteredItems" size="6" size-sm="6" size-md="4" size-lg="3" no-padding>
+      <ion-col *ngFor="let item of filteredItems" size="6" size-sm="6" size-md="4" size-lg="5" col-6 no-padding>
         <ion-card class="welcome-card" (click)="openDetailsWithState(item)">
 
-          <!-- <ion-img *ngIf="item.filePath" [src]="pathForImage(item.filePath)" [alt]="pathForImage(item.filePath)"
-            style=" height:100%;"></ion-img>
-          [ngStyle]="{'content': displayImage(item)}" -->
+          
           <img *ngIf="item.filePath" src="{{pathForImage(item.filePath)}}" alt="{{pathForImage(item.filePath)}}">
           <div *ngIf="!item.filePath"
             style="background-color:darkslategray;text-align: center;padding-top: 30%;padding-bottom: 30%; height:100%;">
@@ -39,15 +39,19 @@
         </ion-card>
       </ion-col>
     </ion-row>
-  </ion-grid>
+  </ion-grid> -->
+  <!-- <ion-img *ngIf="item.filePath" [src]="pathForImage(item.filePath)" [alt]="pathForImage(item.filePath)"
+            style=" height:100%;"></ion-img>
+          [ngStyle]="{'content': displayImage(item)}" -->
 
-  <!-- <div class="pins">
 
-    <div class="pin" *ngFor="let item of filteredItems">
+  <div class="pins" no-padding>
+    <!--  -->
+    <div class="pin" *ngFor="let item of filteredItems" no-padding>
 
       <ion-card (click)="openDetailsWithState(item)">
 
-        <ion-img *ngIf="item.filePath" [src]="pathForImage(item.filePath)"></ion-img>
+        <img *ngIf="item.filePath" src="{{pathForImage(item.filePath)}}" alt="{{pathForImage(item.filePath)}}">
         <div *ngIf="!item.filePath"
           style="background-color:darkslategray;text-align: center;padding-top: 25%;padding-bottom: 25%; min-width: 150px;">
           <ion-icon name="camera" style="font-size:64px;color: black;opacity: 0.5;"></ion-icon>
@@ -59,7 +63,7 @@
       </ion-card>
     </div>
 
-  </div> -->
+  </div>
 
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="createNewItem()">
