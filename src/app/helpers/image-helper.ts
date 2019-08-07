@@ -32,7 +32,9 @@ export class ImageHelper {
             return '';
         } else {
             const converted = this.webview.convertFileSrc(img);
-            return converted;
+            var re = /undefined/gi;
+            const fixed = converted.replace(re, "http://localhost");
+            return fixed;
         }
     }
 
