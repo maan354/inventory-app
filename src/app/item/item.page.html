@@ -50,7 +50,7 @@
 
     <ion-item>
       <ion-label position="stacked">Name</ion-label>
-      <ion-input [(ngModel)]="item.name"></ion-input>
+      <ion-input autocapitalize="on" [(ngModel)]="item.name"></ion-input>
     </ion-item>
 
 
@@ -80,7 +80,7 @@
 
     <ion-item>
       <ion-label position="stacked">Barcode</ion-label>
-      <ion-input [(ngModel)]="item.barcode"></ion-input>
+      <ion-input autocapitalize="on" [(ngModel)]="item.barcode"></ion-input>
       <!-- <ion-icon name="camera" size="small" slot="end"></ion-icon> -->
     </ion-item>
 
@@ -91,7 +91,7 @@
 
     <ion-item>
       <ion-label position="stacked">Description</ion-label>
-      <ion-textarea [(ngModel)]="item.description"></ion-textarea>
+      <ion-textarea autocapitalize="on" [(ngModel)]="item.description"></ion-textarea>
     </ion-item>
 
     <!-- <div class="ion-padding"> -->

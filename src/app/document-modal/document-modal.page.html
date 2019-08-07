@@ -30,12 +30,12 @@
 
   <ion-item>
     <ion-label position="stacked">Name</ion-label>
-    <ion-input name="name" [(ngModel)]="document.name" type="text"></ion-input>
+    <ion-input autocapitalize="on" name="name" [(ngModel)]="document.name" type="text"></ion-input>
   </ion-item>
 
   <ion-item>
     <ion-label position="stacked">Description</ion-label>
-    <ion-textarea name="description" [(ngModel)]="document.description" type="text"></ion-textarea>
+    <ion-textarea autocapitalize="on" name="description" [(ngModel)]="document.description" type="text"></ion-textarea>
   </ion-item>
 
   <!-- Check that form is valid -->

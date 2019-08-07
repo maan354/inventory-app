@@ -13,6 +13,96 @@ const STORAGE_KEY = 'my_items';
 export class ItemService {
     private items: item[];
 
+    //https://www.iii.org/article/brochure-home-inventory
+    private defaultCategories: string[] = [
+        'Decorations',
+        'Electronics',
+        'Appliances',
+        'Furniture',
+        'Vehicle',
+        'Clothing',
+
+        'Sports',
+        'Curtains',
+        'Crockery',
+        'Linens',
+
+        'Kitchen',
+        'Living',
+        'Lounge',
+        'Dining',
+        'Bedroom',
+        'Bathroom',
+        'Patio',
+        'Guest',
+        'Garage',
+        'Study',
+
+        'Television',
+        'Camera',
+        'Phone',
+        'Washer',
+        'Dryer',
+        'Heater',
+        'Fan',
+        'Vacuum',
+        'Exercise',
+
+        'Rug',
+        'Bookcase',
+        'Table',
+        'Chair',
+        'Lamp',
+        'Clock',
+        'Mirror',
+        'Vase',
+        'Collection',
+        'Picture',
+        'Musical',
+        'Sofa',
+        'Couch',
+        'Buffet',
+        'Beds',
+
+        'Shoe',
+        'Coat',
+        'Fur',
+        'Suit',
+        'Dress',
+        'Sweater',
+        'Sport',
+        'Shirt',
+        'Skirt',
+        'Jewelry',
+
+        'Refrigerator',
+        'Freezer',
+        'Stove',
+        'Microwave',
+        'Oven',
+        'Dishwasher',
+        'Pot',
+        'Dishes',
+        'Glass',
+        'Utensil',
+
+        'Towels',
+        'Desk',
+        'Computer',
+
+        'Luggage',
+        'Lawn',
+        'Bicycle',
+        'Garden',
+        'Ladder',
+        'Tool',
+        'Holiday',
+        'Planter',
+
+        'Braai',
+
+        'Book',
+    ]
     constructor(
         private storage: Storage, private webview: WebView, private file: File) {
     }
@@ -50,7 +140,7 @@ export class ItemService {
         const categories = items
             .reduceRight((a, i) => a.concat(i.categories), [])
             .filter(distinct);
-        return categories;
+        return this.defaultCategories.concat(categories);
     }
 
     public async saveToStorage() {
