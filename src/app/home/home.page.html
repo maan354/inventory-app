@@ -13,9 +13,10 @@
 <ion-content>
   <div class="banner">
     <ion-text color="light">
+      <h3 *ngIf="isLoggedIn">Hi, {{userName}}!</h3>
       <h1 *ngIf="!searchTerm && items.length === 0">You have no items yet</h1>
       <h1 *ngIf="!searchTerm && items.length === 1">You have 1 Item</h1>
-      <h1 *ngIf="!searchTerm && items.length != 1">You have {{items.length}} Items</h1>
+      <h1 *ngIf="!searchTerm && items.length > 1">You have {{items.length}} Items</h1>
       <h1 *ngIf="searchTerm">{{filteredItems.length}} Items Selected</h1>
     </ion-text>
   </div>
@@ -46,12 +47,14 @@
 
 
   <div class="pins" no-padding>
-    <!--  -->
     <div class="pin" *ngFor="let item of filteredItems" no-padding>
 
       <ion-card (click)="openDetailsWithState(item)">
-
-        <img *ngIf="item.filePath" src="{{pathForImage(item.filePath)}}" alt="{{pathForImage(item.filePath)}}">
+        <!-- swap based on logged in status -->
+        <!-- <img *ngIf="item.filePath" src="{{pathForImage(item.filePath)}}" alt="{{pathForImage(item.filePath)}}" /> -->
+        <amplify-s3-image *ngIf="item.filePath" framework="ionic" path="{{item.filePath}}"
+          [options]="{level:'private'}">
+        </amplify-s3-image>
         <div *ngIf="!item.filePath"
           style="background-color:darkslategray;text-align: center;padding-top: 25%;padding-bottom: 25%; min-width: 150px;">
           <ion-icon name="camera" style="font-size:64px;color: black;opacity: 0.5;"></ion-icon>

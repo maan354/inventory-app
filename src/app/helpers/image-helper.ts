@@ -27,7 +27,7 @@ export class ImageHelper {
     }
 
     public pathForImage(img: string) {
-        // return img; //MOCK TODO: Make this read config
+        return img; //MOCK TODO: Make this read config
         if (img === null) {
             return '';
         } else {
@@ -69,9 +69,9 @@ export class ImageHelper {
 
     public takePicture(sourceType: PictureSourceType, assignFunction: (path: string) => void, crop: boolean = true) {
         // //MOCK TODO: Make this read config
-        // const rand = (Math.ceil(Math.random() * 10))
-        // assignFunction(`https://picsum.photos/200?random=${rand}`);
-        // return;
+        const rand = (Math.ceil(Math.random() * 10))
+        assignFunction(`https://picsum.photos/200?random=${rand}`);
+        return;
 
         var options: CameraOptions = {
             quality: 100,

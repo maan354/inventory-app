@@ -1,6 +1,8 @@
 import { Guid } from 'guid-typescript';
 
 export interface item {
+    addedDate: Date;
+    lastEditedDate: Date;
     id: Guid;
     name: string;
     description: string;
@@ -8,9 +10,7 @@ export interface item {
     number: number;
     barcode: string;
     serialNumber: string;
-    image: string;
     filePath: string;
-    thumbPath: string;
     categories: string[];
     documents: document[];
 }
@@ -18,7 +18,6 @@ export interface item {
 export interface document {
     id: Guid;
     itemId: Guid,
-    image: string;
     filePath: string;
     name: string;
     description: string;

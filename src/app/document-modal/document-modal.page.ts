@@ -18,6 +18,8 @@ export class DocumentModalPage implements OnInit {
   @Input() title: string;
   private backbuttonSubscription: Subscription;
 
+  private coverImageUrl: string;
+
   constructor(
     private modalController: ModalController,
     private camera: Camera,
@@ -34,7 +36,7 @@ export class DocumentModalPage implements OnInit {
   //Add document scanner rather than normal camera: https://ionicframework.com/docs/native/document-scanner
   //Add document viewer
 
-  ngOnInit() {
+  async ngOnInit() {
     console.log('opening : ', this.document);
     const event = fromEvent(document, 'backbutton');
     this.backbuttonSubscription = event.subscribe(async () => {
@@ -44,7 +46,11 @@ export class DocumentModalPage implements OnInit {
         modal.dismiss(null);
       }
     });
+
+    this.coverImageUrl = await this.itemService.getImagePath(this.document.filePath);
+
   }
+
   ngOnDestroy() {
     this.backbuttonSubscription.unsubscribe();
   }
@@ -53,20 +59,31 @@ export class DocumentModalPage implements OnInit {
     const baseCss = "linear-gradient( rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5) )"
     if (this.document.filePath) {
 
-      return `url("${this.imageHelper.pathForImage(this.document.filePath)}")`;
+      return `url("${this.coverImageUrl}")`;
     }
     return baseCss;
   }
 
   public showImage(event) {
     event.stopPropagation();
-    this.imageHelper.showImage(this.document.filePath)
+    this.imageHelper.showImage(this.coverImageUrl)
   }
 
   public async addImage(event) {
     event.stopPropagation();
-    // this.imageHelper.getImage((path) => {this.document.filePath = path; });
-    this.imageHelper.getImage((path) => { this.document.filePath = path; }, false);
+
+    const oldPath = this.document.filePath;
+    const callbackFunction = async (newPath) => {
+      const path = await this.itemService.updateImage(oldPath, newPath);
+      this.document.filePath = path;
+      this.coverImageUrl = await this.itemService.getImagePath(this.document.filePath);
+
+    };
+
+    await this.imageHelper.getImage(callbackFunction, false);
+    //this.itemService.saveItem(this.item);
+
+    //Update cover image
   }
 
   isEmptyOrSpaces(str) {

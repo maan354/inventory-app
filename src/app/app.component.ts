@@ -19,6 +19,11 @@ export class AppComponent {
       title: 'Slides',
       url: '/slides',
       icon: 'information-circle-outline'
+    },
+    {
+      title: 'Settings',
+      url: '/settings',
+      icon: 'gear'
     }
   ];
 

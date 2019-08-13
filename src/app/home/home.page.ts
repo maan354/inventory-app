@@ -5,6 +5,7 @@ import { ItemService } from '../services/item-service';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { Guid } from "guid-typescript";
 import { ImageHelper } from '../helpers/image-helper';
+import { AuthGuardService } from '../services/auth-route-guard';
 
 @Component({
   selector: 'app-home',
@@ -17,16 +18,31 @@ export class HomePage implements OnInit {
   public filteredItems = [];
   public items = [];
 
+  public isLoggedIn = false;
+  public userName = "";
+
   constructor(private router: Router,
     private imageHelper: ImageHelper,
-    private itemService: ItemService
-  ) { }
-
-  ngOnInit() {
+    private itemService: ItemService,
+    private authGuardService: AuthGuardService
+  ) {
+    console.log('re-loading data from cloud')
     this.itemService.getItems().then(items => {
       this.items = items;
       this.filteredItems = items;
     });
+  }
+
+  ngOnInit() {
+    this.authGuardService.getLoginState().then(state => {
+      this.isLoggedIn = state.loggedIn;
+      const user = state.user;
+      if (user)
+        this.userName = user.attributes.name;
+
+      if (!this.isLoggedIn)
+        this.router.navigate(['/settings']);
+    })
   }
 
   stringContainsTerm(inputString: string, term: string) {
@@ -63,7 +79,18 @@ export class HomePage implements OnInit {
 
   createNewItem() {
     let blankItem: item = {
-      id: Guid.create(), name: '', image: '', filePath: '', thumbPath: '', description: "", price: 0, number: 1, categories: [], barcode: "", serialNumber: "", documents: []
+      id: Guid.create(),
+      name: '',
+      filePath: '',
+      description: "",
+      price: 0,
+      number: 1,
+      categories: [],
+      barcode: "",
+      serialNumber: "",
+      documents: [],
+      addedDate: new Date(),
+      lastEditedDate: new Date(),
     };
     let navigationExtras: NavigationExtras = {
       state: {
@@ -75,7 +102,9 @@ export class HomePage implements OnInit {
   }
 
   pathForImage(img) {
-    return this.imageHelper.pathForImage(img)
+    // return this.imageHelper.pathForImage(img)
+    //return this.itemService.getImagePath(img);
+    return img;
   }
 
   displayImage(item) {

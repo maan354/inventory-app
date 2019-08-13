@@ -18,6 +18,10 @@ const routes: Routes = [
   {
     path: 'slides',
     loadChildren: './components/slides/slides.module#SlidesPageModule'
+  },
+  {
+    path: 'settings',
+    loadChildren: './settings/settings.module#SettingsPageModule'
   }
 ];
 
@@ -27,4 +31,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

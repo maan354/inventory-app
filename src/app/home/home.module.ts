@@ -5,12 +5,15 @@ import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 
 import { HomePage } from './home.page';
+import { AmplifyAngularModule, AmplifyIonicModule, AmplifyService } from 'aws-amplify-angular'
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    AmplifyAngularModule,
+    AmplifyIonicModule,
     RouterModule.forChild([
       {
         path: '',
@@ -20,4 +23,4 @@ import { HomePage } from './home.page';
   ],
   declarations: [HomePage]
 })
-export class HomePageModule {}
+export class HomePageModule { }

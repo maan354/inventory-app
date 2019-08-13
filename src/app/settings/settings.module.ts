@@ -4,30 +4,24 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 
-import { ItemPage } from './item.page';
-
-import { TagInputModule } from 'ngx-chips';
-import { DocumentModalPageModule } from '../document-modal/document-modal.module'
-
-import { AmplifyAngularModule, AmplifyIonicModule, AmplifyService } from 'aws-amplify-angular'//TODO:consolidate this
-
+import { SettingsPage } from './settings.page';
+import { AmplifyAngularModule, AmplifyIonicModule, AmplifyService } from 'aws-amplify-angular'
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    TagInputModule,
-    DocumentModalPageModule,
     AmplifyAngularModule,
     AmplifyIonicModule,
     RouterModule.forChild([
       {
         path: '',
-        component: ItemPage
+        component: SettingsPage
       }
     ])
   ],
-  declarations: [ItemPage]
+  declarations: [SettingsPage],
+  providers: [AmplifyService]
 })
-export class ItemPageModule { }
+export class SettingsPageModule { }

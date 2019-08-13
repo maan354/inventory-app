@@ -1,0 +1,19 @@
+{
+    "dev": {
+        "awscloudformation": {
+            "AuthRoleName": "inventory-boss-dev-20190807145640-authRole",
+            "UnauthRoleArn": "arn:aws:iam::796382041404:role/inventory-boss-dev-20190807145640-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::796382041404:role/inventory-boss-dev-20190807145640-authRole",
+            "Region": "eu-west-1",
+            "DeploymentBucketName": "inventory-boss-dev-20190807145640-deployment",
+            "UnauthRoleName": "inventory-boss-dev-20190807145640-unauthRole",
+            "StackName": "inventory-boss-dev-20190807145640",
+            "StackId": "arn:aws:cloudformation:eu-west-1:796382041404:stack/inventory-boss-dev-20190807145640/ce55cc30-b912-11e9-9f02-020193028d12"
+        },
+        "categories": {
+            "auth": {
+                "inventoryboss927a780c": {}
+            }
+        }
+    }
+}

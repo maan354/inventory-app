@@ -13,9 +13,9 @@
 
 </ion-header>
 
-<ion-content padding>
+<ion-content>
   <div *ngIf="!document.filePath" class="banner" [ngStyle]="{'background-image': displayImage()}">
-    <ion-icon name="camera" style="font-size:64px;color: white;opacity: 0.5;" (click)="addImage()"></ion-icon>
+    <ion-icon name="camera" style="font-size:64px;color: white;opacity: 0.5;" (click)="addImage($event)"></ion-icon>
   </div>
 
   <div class="banner" *ngIf="document.filePath" [ngStyle]="{'background-image': displayImage()}" style="height:60%"
@@ -39,7 +39,7 @@
   </ion-item>
 
   <!-- Check that form is valid -->
-  <div class="ion-padding">
+  <div padding>
     <ion-button expand="block" class="ion-no-margin" *ngIf="!isValidName()" disabled>Save</ion-button>
     <ion-button expand="block" (click)="closeModal(document)" class="ion-no-margin" *ngIf="isValidName()">Save
     </ion-button>

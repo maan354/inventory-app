@@ -1,0 +1,15 @@
+{
+	"auth": {
+		"inventoryboss927a780c": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": []
+		}
+	},
+	"storage": {
+		"BoxzyAppBucket": {
+			"service": "S3",
+			"providerPlugin": "awscloudformation"
+		}
+	}
+}

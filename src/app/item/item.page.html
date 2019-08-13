@@ -20,7 +20,7 @@
     <!-- <ion-icon *ngIf="item.image" name="camera" style="font-size:64px;color: white;opacity: 0.5;"(click)="addImage()"></ion-icon> -->
     <!-- <ion-icon *ngIf="!item.image" name="camera" style="font-size:64px;color: white;" (click)="addImage()"></ion-icon> -->
     <ion-icon *ngIf="!item.filePath" name="camera" style="font-size:64px;color: white;opacity: 0.5;"
-      (click)="addImage()"></ion-icon>
+      (click)="addImage($event)"></ion-icon>
     <!-- <ion-icon name="camera" style="font-size:64px;color: white;opacity: 0.5;" (click)="addImage()"></ion-icon> -->
     <!-- https://devdactic.com/ionic-4-image-upload-storage/ -->
   </div>
@@ -95,8 +95,9 @@
     </ion-item>
 
     <!-- <div class="ion-padding"> -->
-    <ion-button *ngIf="!isValidName()" expand="full" disabled class="ion-no-margin">Save Item</ion-button>
-    <ion-button *ngIf="isValidName()" expand="full" (click)="saveItem()" class="ion-no-margin">Save Item</ion-button>
+    <ion-button *ngIf="!isValidName()" expand="full" disabled>Save Item</ion-button>
+    <!-- class="ion-no-margin" -->
+    <ion-button *ngIf="isValidName()" expand="full" (click)="saveItem()">Save Item</ion-button>
     <!-- </div> -->
   </ion-list>
 
@@ -106,8 +107,11 @@
         <ion-col *ngFor="let document of item.documents" size="12" size-sm="12" size-md="12" size-lg="12" no-padding>
           <ion-card class="welcome-card pin" (click)="editDocument(document)">
             <!-- <ion-img *ngIf="document.filePath" [src]="document.filePath" [alt]="pathForImage(document.filePath)"></ion-img> -->
-            <img *ngIf="document.filePath" src="{{pathForImage(document.filePath)}}"
-              alt="{{pathForImage(document.filePath)}}">
+            <!-- <img *ngIf="document.filePath" src="{{pathForImage(document.filePath)}}"
+              alt="{{pathForImage(document.filePath)}}"> -->
+            <amplify-s3-image *ngIf="document.filePath" framework="ionic" path="{{document.filePath}}"
+              [options]="{level:'private'}">
+            </amplify-s3-image>
             <div *ngIf="!document.filePath"
               style="background-color:darkslategray;text-align: center;padding-top: 25%;padding-bottom: 25%">
               <ion-icon name="camera" style="font-size:64px;color: black;opacity: 0.5;"></ion-icon>

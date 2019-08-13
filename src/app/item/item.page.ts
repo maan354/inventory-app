@@ -27,7 +27,11 @@ export class ItemPage implements OnInit {
   public selectedTab = 'info';
   public categories = ['q', 'w', 'e'];
 
-  ngOnInit() {
+  public coverImageUrl: string;
+
+  async ngOnInit() {
+    //TODO: make this a component
+    this.coverImageUrl = await this.itemService.getImagePath(this.item.filePath);
   }
 
   public data: any;
@@ -39,7 +43,7 @@ export class ItemPage implements OnInit {
     private deleteConfirmationPopover: DeleteConfirmationPopover
   ) {
     this.item = this.router.getCurrentNavigation().extras.state.item;
-    this.categories = this.itemService.getCategories();
+    this.itemService.getCategories().then(categories => this.categories = categories);
   }
 
   pathForImage(img) {
@@ -49,8 +53,7 @@ export class ItemPage implements OnInit {
   displayImage() {
     const baseCss = "linear-gradient( rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5) )"
     if (this.item.filePath) {
-
-      return `url("${this.pathForImage(this.item.filePath)}")`;
+      return `url("${this.coverImageUrl}")`;
     }
     return baseCss;
   }
@@ -68,14 +71,14 @@ export class ItemPage implements OnInit {
     console.log($event.detail.value);
   }
 
-  saveItem() {
-    this.itemService.saveItem(this.item);
+  saveItem = async () => {
+    await this.itemService.saveItem(this.item);
     this.router.navigate(['/home']);
   }
 
   async deleteItem() {
-    const deleteAction = () => {
-      this.itemService.deleteItem(this.item);
+    const deleteAction = async () => {
+      await this.itemService.deleteItem(this.item);
       this.router.navigate(['/home']);
     }
     await this.deleteConfirmationPopover.showPopover('item', deleteAction);
@@ -83,16 +86,21 @@ export class ItemPage implements OnInit {
 
   public async addImage(event) {
     event.stopPropagation();
+    const oldPath = this.item.filePath;
 
-    await this.imageHelper.getImage((path) => { this.item.filePath = path; }, false);
-    // await this.imageHelper.takePicture(this.camera.PictureSourceType.CAMERA,(path) => {this.item.filePath = path; },false);
-    // await this.imageHelper.takePicture(this.camera.PictureSourceType.CAMERA,(path) => {this.item.description = path; },false);
-    this.itemService.saveItem(this.item);
+    const callbackFunction = async (newPath) => {
+      const path = await this.itemService.updateImage(oldPath, newPath);
+      this.item.filePath = path;
+      this.coverImageUrl = await this.itemService.getImagePath(this.item.filePath);
+    }
+
+    await this.imageHelper.getImage(callbackFunction, false);
+    await this.itemService.saveItem(this.item);
   }
 
   public showImage(event) {
     event.stopPropagation();
-    this.imageHelper.showImage(this.item.filePath)
+    this.imageHelper.showImage(this.coverImageUrl)
   }
 
   async addDocument() {
@@ -101,7 +109,6 @@ export class ItemPage implements OnInit {
       itemId: this.item.id,
       name: '',
       description: '',
-      image: '',
       filePath: ''
     }
     this.openModal('Add Document', blankDocument)
